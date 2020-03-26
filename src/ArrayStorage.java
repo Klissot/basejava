@@ -5,11 +5,11 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    int size;
+    int size = 0;
 
     void clear() {
         size();
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size,null);
     }
 
     void save(Resume r) {
@@ -19,24 +19,30 @@ public class ArrayStorage {
                 break;
             }
         }
+        size();
     }
 
     Resume get(String uuid) {
-        for (Resume resume : storage) {
-            if (resume.uuid.equals(uuid)) {
-                return resume;
+        for (int i = 0; i < size; i++) {
+            if (storage[i].toString().equals(uuid)) {
+                return storage[i];
+            } else {
+                return null;
             }
         }
         return null;
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < storage.length; i++) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                storage[i] = null;
-                break;
+                Resume temp = storage[i + 1];
+                storage[i + 1] = storage[i];
+                storage[i] = temp;
             }
         }
+        storage[size] = null;
+        size();
     }
 
     /**
@@ -44,9 +50,8 @@ public class ArrayStorage {
      */
     Resume[] getAll() {
         int count = 0;
-        sort();
-        for (Resume resume : storage) {
-            if (resume != null) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i] != null) {
                 count++;
             }
         }
@@ -55,23 +60,11 @@ public class ArrayStorage {
 
 
     int size() {
-        sort();
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] != null) {
-                size = i;
+                size = i+1;
             }
         }
         return size;
-    }
-
-    void sort() {
-        for(int i = storage.length - 1; i > 0; i--) {
-            for(int j = 0; j < i; j++) {
-                if (storage[j] == null) {
-                    storage[j] = storage [j+1];
-                    storage[j + 1] = null;
-                }
-            }
-        }
     }
 }
