@@ -9,38 +9,38 @@ public class ArrayStorage {
 
     void clear() {
         Arrays.fill(storage, 0, size,null);
+        size = 0;
     }
 
     void save(Resume r) {
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == null) {
-                storage[i] = r;
-                size++;
-                break;
-            }
+        for (int i = 0; i <= size; i++) {
+            storage[size] = r;
+            size++;
+            break;
         }
     }
 
     Resume get(String uuid) {
-        Resume selectedResume = null;
         for (int i = 0; i < size; i++) {
             if (storage[i].toString().equals(uuid)) {
-                selectedResume = storage[i];
+                return storage[i];
             }
         }
-        return selectedResume;
+        return null;
     }
 
     void delete(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                Resume temp = storage[i + 1];
-                storage[i + 1] = storage[i];
-                storage[i] = temp;
+                storage[i] = null;
+                for (int j = i; j < size; j++) {
+                    Resume temp = storage[j+1];
+                    storage[j+1] = storage[j];
+                    storage[j] = temp;
+                }
+                size--;
             }
         }
-        storage[size] = null;
-        size--;
     }
     /**
      * @return array, contains only Resumes in storage (without null)
