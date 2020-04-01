@@ -31,13 +31,12 @@ public class ArrayStorage {
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 indexForRemove = i;
-                storage[indexForRemove] = null;
             }
         }
-        for (int j = indexForRemove; j < size; j++) {
+        System.out.println(size);
+        for (int j = indexForRemove; j < size - 1; j++) {
             storage[j] = storage[j + 1];
         }
-        size--;
     }
 
     /**
