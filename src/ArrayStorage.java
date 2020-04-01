@@ -34,12 +34,8 @@ public class ArrayStorage {
                 storage[indexForRemove] = null;
             }
         }
-        for (int i = 0; i < 1; i++) {
-            Resume temp = storage[indexForRemove];
-            for (int j = indexForRemove; j < size - 1; j++) {
-                storage[j] = storage[j + 1];
-            }
-            storage[size - 1] = temp;
+        for (int j = indexForRemove; j < size; j++) {
+            storage[j] = storage[j + 1];
         }
         size--;
     }
