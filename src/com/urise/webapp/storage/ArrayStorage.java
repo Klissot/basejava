@@ -18,7 +18,11 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-
+        if (check(r.getUuid())) {
+            storage[index] = r;
+        } else {
+            System.out.println("Error!");
+        }
     }
 
     public void save(Resume r) {
