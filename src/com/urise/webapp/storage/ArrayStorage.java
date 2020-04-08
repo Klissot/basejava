@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
     private int size = 0;
     private int index;
 
@@ -17,39 +17,40 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void update(Resume r) {
-        if (check(r.getUuid())) {
-            storage[index] = r;
+    public void update(Resume resume) {
+        if (check(resume.getUuid())) {
+            storage[index] = resume;
         } else {
-            System.out.println("Error!");
+            System.out.println("No resume found with this uuid - " + resume.getUuid() + "! Check the data entry is correct.");
         }
     }
 
-    public void save(Resume r) {
-        if (!(check(r.getUuid()))) {
-            storage[size] = r;
-            size++;
+    public void save(Resume resume) {
+        if (!(check(resume.getUuid()))) {
+            storage[size] = resume;
+            if (size < storage.length) {
+                size++;
+            } else {
+                System.out.println("The number of resumes has reached its maximum value. Further addition is not possible.");
+            }
         } else {
-            System.out.println("Error!");
+            System.out.println("A resume with this uuid: " + resume.getUuid() + " already exists! Check the data entry is correct.");
         }
     }
 
     public Resume get(String uuid) {
         if (check(uuid)) {
             return storage[index];
-        } else {
-            return null;
         }
+        return null;
     }
 
     public void delete(String uuid) {
         if (check(uuid)) {
-            for (int j = index; j < size - 1; j++) {
-                storage[j] = storage[j + 1];
-            }
+            if (size - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
             size--;
         } else {
-            System.out.println("Error!");
+            System.out.println("No resume found with this uuid - " + uuid + "! Check the data entry is correct.");
         }
     }
 
